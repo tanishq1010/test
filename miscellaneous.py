@@ -1,7 +1,7 @@
 import pandas as pd
-from check_grade_by_video_id import check_grade_by_video_id
-import pandas as pd
-from check_grade_by_book_id import check_grade_by_book_id
+# from check_grade_by_video_id import check_grade_by_video_id
+
+# from check_grade_by_book_id import check_grade_by_book_id
 
 
 def comparator(name1, name2):
@@ -48,25 +48,25 @@ def minutes_converter(length):
         return (str(seconds) + " Sec")
 
 
-# df=pd.read_csv("positive_learn_results_all_subjects.csv")
-def video_book_validation(df, csv_name):
-    df["Correctly present in CG"] = [""] * len(df)
 
-    for ind in df.index:
-        if df["Section_name"][ind] == "INDIVIDUAL":
-            continue
-        elif df["Type"][ind] == "chapter" or df["Type"][ind] == "practice":
-            # answer =check_grade_by_video_id(df["Id"][ind],df["Grade"][ind])
-            df["Correctly present in CG"][ind] = "not_in_scope"
-        elif df["Type"][ind] == "Book":
-            answer = check_grade_by_book_id(df["Id"][ind], df["Exam"][ind])
-            df["Correctly present in CG"][ind] = answer
-        else:
-            df["Correctly present in CG"][ind] = "not_in_scope"
-    df.to_csv(csv_name, index=False)
+# def video_book_validation(df, csv_name):
+#     df["Correctly present in CG"] = [""] * len(df)
+
+#     for ind in df.index:
+#         if df["Section_name"][ind] == "INDIVIDUAL":
+#             continue
+#         elif df["Type"][ind] == "chapter" or df["Type"][ind] == "practice":
+#             # answer =check_grade_by_video_id(df["Id"][ind],df["Grade"][ind])
+#             df["Correctly present in CG"][ind] = "not_in_scope"
+#         elif df["Type"][ind] == "Book":
+#             answer = check_grade_by_book_id(df["Id"][ind], df["Exam"][ind])
+#             df["Correctly present in CG"][ind] = answer
+#         else:
+#             df["Correctly present in CG"][ind] = "not_in_scope"
+#     df.to_csv(csv_name, index=False)
 
 
-# video_book_validation(df)
+
 
 
 def hero_banner_checker(payload, df_negative_results, df_positive_results, name1, name2, home_data, subject):
