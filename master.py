@@ -51,7 +51,7 @@ if __name__ == '__main__':
 
     # print("\n\n COMPARING")
     comparator("positive_test_results_all_subjects.csv", "positive_test_results.csv")
-    # video_book_validation(pd.read_csv("positive_practice_results_all_subjects.csv"),"positive_practice_results_all_subjects.csv")
+    video_book_validation(pd.read_csv("positive_test_results_all_subjects.csv"),"positive_test_results_all_subjects.csv")
 
 
 

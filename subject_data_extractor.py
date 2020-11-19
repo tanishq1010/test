@@ -33,13 +33,32 @@ class Source(object):
             "exam_name": exam,
             "goal": goal,
             "grade": grade,
-            "subject": subject
+            "subject": subject,
+            "fetch_all_content" : "true"
         }
         response1 = self.callAPI(
             f"/fiber_ms/home/test",
             json.dumps(payload),
             'POST', embibe_token)
+        count=0
+        chapter_count=0
+        full_count=0
+        
         for item in response1.json():
+         
+         chapter="Chapter"
+         full="Full"
+        
+         
+         if item['content_section_type']=="SUBJECTS":
+            for data in item["content"]:
+                count+=1
+         if item['section_name'].find(full)>=0:
+            full_count+=1
+         if item['section_name'].find(chapter)>=0:
+            chapter_count+=1
+        for item in response1.json():
+        
             # if item["content_section_type"] == "PRACTICEBANNER":
             #     hero_banner_checker(response1.json(), df_negative_results, df_positive_results,
             #                         "negative_practice_results.csv", "positive_practice_results.csv", home_data,
@@ -80,28 +99,31 @@ class Source(object):
                         df_positive_results.to_csv("positive_test_results.csv", index=False)
 
 
-        str1="Full Tests"
-        str2="Chapter Tests"
+        
         full = False
+        if count==full_count:
+            full=True
         part=False
-        for item in response1.json():
-             str3=item["section_name"]
-             if (str3.find(str1))>0:
-                 full=True
-             if str3.find(str2)>0:
-                 part=True
+        if count==chapter_count:
+            part=True
+        # for item in response1.json():
+        #      str3=item["section_name"]
+        #      if (str3.find(str1))>0:
+        #          full=True
+        #      if str3.find(str2)>0:
+        #          part=True
 
         # df_positive_results = pd.read_csv("positive_learn_results.csv")
         if full == True and part == True:
             df_positive_results.loc[len(df_positive_results)] = home_data + ["", "", random.randint(0, 1000000), "",
-                                                                             "INDIVIDUAL", "", "",
-                                                                             subject, "", "", part,full,""]
+                                                                             "All carousals present", "", "",
+                                                                             "All carousals present", "", "", part,full,""]
 
             df_positive_results.to_csv("positive_test_results.csv", index=False)
         else:
             df_negative_results.loc[len(df_negative_results)] = home_data + ["", "", random.randint(0, 1000000), "",
-                                                                             "INDIVIDUAL", "", "",
-                                                                             subject, "", "",part,full,""]
+                                                                             "All carousals present", "", "",
+                                                                             "All carousals present", "", "",part,full,""]
 
             df_negative_results.to_csv("negative_test_results.csv", index=False)
 

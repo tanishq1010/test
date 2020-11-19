@@ -2,6 +2,7 @@ import pandas as pd
 # from check_grade_by_video_id import check_grade_by_video_id
 
 # from check_grade_by_book_id import check_grade_by_book_id
+from test_data import test_data_extractor
 
 
 def comparator(name1, name2):
@@ -9,6 +10,8 @@ def comparator(name1, name2):
     # df1=df[df['Grades'].str.contains(grade)]
     df2 = pd.read_csv(name2)
     for ind in df1.index:
+        if df1['Section_name'][ind]=='All carousals present' or df1['Section_name'][ind]=='All subjet Tags present':
+            continue
         df_new = df2.loc[df2["Section_name"] == df1["Section_name"][ind]]
 
         if len(df_new) > 0:
@@ -49,21 +52,19 @@ def minutes_converter(length):
 
 
 
-# def video_book_validation(df, csv_name):
-#     df["Correctly present in CG"] = [""] * len(df)
+def video_book_validation(df, csv_name):
+    df["Correctly present in CG"] = [""] * len(df)
 
-#     for ind in df.index:
-#         if df["Section_name"][ind] == "INDIVIDUAL":
-#             continue
-#         elif df["Type"][ind] == "chapter" or df["Type"][ind] == "practice":
-#             # answer =check_grade_by_video_id(df["Id"][ind],df["Grade"][ind])
-#             df["Correctly present in CG"][ind] = "not_in_scope"
-#         elif df["Type"][ind] == "Book":
-#             answer = check_grade_by_book_id(df["Id"][ind], df["Exam"][ind])
-#             df["Correctly present in CG"][ind] = answer
-#         else:
-#             df["Correctly present in CG"][ind] = "not_in_scope"
-#     df.to_csv(csv_name, index=False)
+    for ind in df.index:
+        if df["Section_name"][ind] == "All carousals present" or df["Section_name"][ind] == "All subjet Tags present" :
+            continue
+        
+        elif df["Type"][ind] == "Test":
+            answer = test_data_extractor(df["Goal"][ind],df["Exam"][ind],df["Id"][ind])
+            df["Correctly present in CG"][ind] = answer
+        else:
+            df["Correctly present in CG"][ind] = "not_in_scope"
+    df.to_csv(csv_name, index=False)
 
 
 
@@ -86,21 +87,51 @@ def hero_banner_checker(payload, df_negative_results, df_positive_results, name1
                         questions = details["questions"]
                         subject_tagged = details["subject"]
 
-                        if title == "" or description == "" or duration == 0 or questions == 0 or id == "" or Type == "" or section_id != 100:
-                            duration = minutes_converter(duration)
-                            df_negative_results.loc[len(df_negative_results)] = home_data + [duration, Type, id, title,
+
+                        try:
+                            print("HERO BANNER CHECK WITH CVS WORKING")
+                            df_herobanner_csv=pd.read_csv('TestHeroBanner.csv')
+                            goal=home_data[2]
+                            exam=home_data[1]
+                            df_herobanner_csv= df_herobanner_csv[df_herobanner_csv['goal'].str.contains(goal)]
+                            df_herobanner_csv= df_herobanner_csv[df_herobanner_csv['exam'].str.contains(exam)]
+                            df_herobanner_csv.reset_index(drop=True, inplace=True)
+
+                            if title == "" or description == "" or duration == 0 or questions == 0 or id == "" or Type == "" or section_id != 100 or title!=str(df_herobanner_csv["testTile"][0]):
+                                duration = minutes_converter(duration)
+                                df_negative_results.loc[len(df_negative_results)] = home_data + [duration, Type, id, title,
                                                                                              "TESTBANNER", questions,
                                                                                              subject, subject_tagged,
                                                                                              "",
                                                                                              "", "", "", ""]
-                            df_negative_results.to_csv(name1, index=False)
-                        else:
-                            duration = minutes_converter(duration)
-                            df_positive_results.loc[len(df_positive_results)] = home_data + [duration, Type, id, title,
+                                df_negative_results.to_csv(name1, index=False)
+                            else:
+                                duration = minutes_converter(duration)
+                                df_positive_results.loc[len(df_positive_results)] = home_data + [duration, Type, id, title,
                                                                                              "TESTBANNER", questions,
                                                                                              subject, subject_tagged,
                                                                                              "",
                                                                                              "", "", "", ""]
-                            df_positive_results.to_csv(name2, index=False)
+                                df_positive_results.to_csv(name2, index=False)
+                        except:
+                            print("HERO BANNER CHECK WITH CVS NOT WORKING")
+                            if title == "" or description == "" or duration == 0 or questions == 0 or id == "" or Type == "" or section_id != 100 :
+                                duration = minutes_converter(duration)
+                                df_negative_results.loc[len(df_negative_results)] = home_data + [duration, Type, id, title,
+                                                                                             "TESTBANNER", questions,
+                                                                                             subject, subject_tagged,
+                                                                                             "",
+                                                                                             "", "", "", ""]
+                                df_negative_results.to_csv(name1, index=False)
+                            else:
+                                duration = minutes_converter(duration)
+                                df_positive_results.loc[len(df_positive_results)] = home_data + [duration, Type, id, title,
+                                                                                             "TESTBANNER", questions,
+                                                                                             subject, subject_tagged,
+                                                                                             "",
+                                                                                             "", "", "", ""]
+                                df_positive_results.to_csv(name2, index=False)
+
+
         if flag == 1:
             break
