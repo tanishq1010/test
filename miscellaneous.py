@@ -27,7 +27,7 @@ def comparator(name1, name2):
                     if len(df_new3) > 0:
                         df_new4 = df_new3.loc[df_new3["Subject_tagged"] == df1["Subject_tagged"][ind]]
                         if len(df_new4) > 0:
-                            df1["present in subject"][ind] = str("yes")
+                            df1["present in all subjects"][ind] = str("yes")
         else:
             df1["present in all subjects"][ind] = str("no")
     df1.to_csv(name2, index=False)

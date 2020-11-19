@@ -175,13 +175,13 @@ class Source(object):
         if full == True and full == True :
             df_positive_results_all_subjects.loc[len(df_positive_results_all_subjects)] = home_data + ["", "", random.randint(0, 1000000), "",
                                                                                          "All carousals present", "", "",
-                                                                                         "subjet", "", "",part,full,""]
+                                                                                         "all subjects", "", "",part,full,""]
 
             df_positive_results_all_subjects.to_csv("positive_test_results_all_subjects.csv", index=False)
         else:
             df_negative_results_all_subjects.loc[len(df_negative_results_all_subjects)] = home_data + ["", "", random.randint(0, 1000000), "",
                                                                                          "All carousals present", "", "",
-                                                                                         "subjet", "", "",part,full,""]
+                                                                                         "all subjects", "", "",part,full,""]
 
             df_negative_results_all_subjects.to_csv("negative_test_results_all_subjects.csv", index=False)
         if all_subjects_present==True:
