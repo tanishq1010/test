@@ -73,6 +73,7 @@ class Source(object):
         if LIST==LIST2:
             all_subjects_present=True
         # print(LIST,LIST2)
+        print(LIST,LIST2)
 
 
 
@@ -154,8 +155,8 @@ class Source(object):
                         df_positive_results_all_subjects.loc[len(df_positive_results_all_subjects)] = home_data + [length, Type, id, title,section_name,questions,"All Subjects", subject_tagged,"","","","",thumbnail]
                         df_positive_results_all_subjects.to_csv("positive_test_results_all_subjects.csv", index=False)
 
-
-
+        print(df_positive_results_all_subjects)
+        print("sdjksahdsa-------------------------------------------------------")
         home_data = [child_id, exam, goal,grade]
 
         full = False
@@ -175,13 +176,13 @@ class Source(object):
         if full == True and full == True :
             df_positive_results_all_subjects.loc[len(df_positive_results_all_subjects)] = home_data + ["", "", random.randint(0, 1000000), "",
                                                                                          "All carousals present", "", "",
-                                                                                         "All carousals present", "", "",part,full,""]
+                                                                                         "subjet", "", "",part,full,""]
 
             df_positive_results_all_subjects.to_csv("positive_test_results_all_subjects.csv", index=False)
         else:
             df_negative_results_all_subjects.loc[len(df_negative_results_all_subjects)] = home_data + ["", "", random.randint(0, 1000000), "",
                                                                                          "All carousals present", "", "",
-                                                                                         "All carousals present", "", "",part,full,""]
+                                                                                         "subjet", "", "",part,full,""]
 
             df_negative_results_all_subjects.to_csv("negative_test_results_all_subjects.csv", index=False)
         if all_subjects_present==True:
