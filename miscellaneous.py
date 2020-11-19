@@ -6,9 +6,11 @@ from test_data import test_data_extractor
 
 
 def comparator(name1, name2):
-    df1 = pd.read_csv(name1)
+    df1 = pd.read_csv(name2)
     # df1=df[df['Grades'].str.contains(grade)]
-    df2 = pd.read_csv(name2)
+    df2 = pd.read_csv(name1)
+    list1 = [""] * len(df1)
+    df1["present in all subjects"] = list1
     for ind in df1.index:
         if df1['Section_name'][ind]=='All carousals present' or df1['Section_name'][ind]=='All subjet Tags present':
             continue
@@ -27,8 +29,8 @@ def comparator(name1, name2):
                         if len(df_new4) > 0:
                             df1["present in subject"][ind] = str("yes")
         else:
-            df1["present in subject"][ind] = str("no")
-    df1.to_csv(name1, index=False)
+            df1["present in all subjects"][ind] = str("no")
+    df1.to_csv(name2, index=False)
 
 
 def minutes_converter(length):
@@ -53,7 +55,7 @@ def minutes_converter(length):
 
 
 def video_book_validation(df, csv_name):
-    df["Correctly present in CG"] = [""] * len(df)
+    # df["Correctly present in CG"] = [""] * len(df)
 
     for ind in df.index:
         if df["Section_name"][ind] == "All carousals present" or df["Section_name"][ind] == "All subjet Tags present" :

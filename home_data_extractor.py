@@ -155,8 +155,7 @@ class Source(object):
                         df_positive_results_all_subjects.loc[len(df_positive_results_all_subjects)] = home_data + [length, Type, id, title,section_name,questions,"All Subjects", subject_tagged,"","","","",thumbnail]
                         df_positive_results_all_subjects.to_csv("positive_test_results_all_subjects.csv", index=False)
 
-        print(df_positive_results_all_subjects)
-        print("sdjksahdsa-------------------------------------------------------")
+     
         home_data = [child_id, exam, goal,grade]
 
         full = False

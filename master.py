@@ -11,7 +11,7 @@ from miscellaneous import *
 
 def for_all_exam_goal(goal_exam_grade):
     for ind in goal_exam_grade.index:
-#      if goal_exam_grade["Exam_name"][ind]=="IBPS RRB Office Assistant Mains":
+     # if goal_exam_grade["Exam_name"][ind]=="IBPS RRB Office Assistant Mains":
         print(goal_exam_grade["Goal"][ind], goal_exam_grade["Exam_name"][ind])
         # signup_data=Signup()
         # login_data=login(signup_data[0],"embibe1234")
@@ -22,8 +22,8 @@ def for_all_exam_goal(goal_exam_grade):
                   goal_exam_grade["Exam_name"][ind],
                   goal_exam_grade["Goal"][ind],'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoic3R1ZGVudCIsInRpbWVfc3RhbXAiOiIyMDIwLTEwLTE1IDE3OjQyOjI2IFVUQyIsImlzX2d1ZXN0IjpmYWxzZSwiaWQiOjM3MjE0MDQsImVtYWlsIjoiMzYxNTU5NF8xNjAyNzgzNzQ2QGVtYmliZS11c2VyLmNvbSJ9.QYI2fB25BRp4c8KNkHIKSOSYLvxARKIDGxJXstk5OMqmlZiQ-E2kult1tDHHKP7eNtNnh4-upBdjmFQeM8CkVw')
         # break
-#      else :
-#         continue
+     # else :
+     #    continue
 
 
 if __name__ == '__main__':
@@ -54,7 +54,7 @@ if __name__ == '__main__':
 
     # print("\n\n COMPARING")
     comparator("positive_test_results_all_subjects.csv", "positive_test_results.csv")
-    video_book_validation(pd.read_csv("positive_test_results_all_subjects.csv"),"positive_test_results_all_subjects.csv")
+    video_book_validation(pd.read_csv("positive_test_results.csv"),"positive_test_results.csv")
 
 
 
