@@ -69,7 +69,7 @@ class Source(object):
         
         LIST2.sort()
         # print(LIST2)
-
+        all_subjects_present=False
         if LIST==LIST2:
             all_subjects_present=True
         # print(LIST,LIST2)
