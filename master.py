@@ -1,6 +1,7 @@
 from goal_exam_extractor import goal_exam_grade_extractor
 from home_data_extractor import home_data
 import pandas as pd
+import numpy as np
 
 from login_sign_up import *
 
@@ -40,11 +41,11 @@ if __name__ == '__main__':
     df_positive_results_all_subjects.to_csv("positive_test_results_all_subjects.csv", index=False)
     df_negative_results = pd.DataFrame(columns=['Child_ID', 'Exam', 'Goal', "Grade",
                                                 'Duration/Concept count', 'Type', 'Id', "Title", 'Section_name',
-                                                'Questions', "Subject", "Subject_tagged", "present only once",
+                                                'Questions', "Subject", "Subject_tagged", "Duplicasy check",
                                                 "Correctly present in CG","Chapter test present","Full test present","Thumbnail present"])
     df_positive_results = pd.DataFrame(columns=['Child_ID', 'Exam', 'Goal', "Grade",
                                                 'Duration/Concept count', 'Type', 'Id', "Title", 'Section_name',
-                                                'Questions', "Subject", "Subject_tagged", "present only once",
+                                                'Questions', "Subject", "Subject_tagged", "Duplicasy check",
                                                 "Correctly present in CG","Chapter test present","Full test present","Thumbnail present"])
     df_negative_results.to_csv("negative_test_results.csv", index=False)
     df_positive_results.to_csv("positive_test_results.csv", index=False)
@@ -54,8 +55,29 @@ if __name__ == '__main__':
 
     # print("\n\n COMPARING")
     comparator("positive_test_results_all_subjects.csv", "positive_test_results.csv")
+    comparator2("positive_test_results_all_subjects.csv", "positive_test_results.csv")
     video_book_validation(pd.read_csv("positive_test_results.csv"),"positive_test_results.csv")
+    video_book_validation(pd.read_csv("positive_test_results_all_subjects.csv"),"positive_test_results_all_subjects.csv")
+    df1=pd.read_csv('positive_test_results_all_subjects.csv')
+    df2=pd.read_csv('positive_test_results.csv')
+    df3=pd.read_csv('negative_test_results_all_subjects.csv')
+    df4=pd.read_csv('negative_test_results.csv')
+    
+    def recode_empty_cells(dataframe, list_of_columns):
 
+        for column in list_of_columns:
+         dataframe[column] = dataframe[column].replace(r'\s+', np.nan, regex=True)
+         dataframe[column] = dataframe[column].fillna("NA")
+
+        return dataframe
+    df1=recode_empty_cells(df1,df1.columns.tolist())
+    df2=recode_empty_cells(df2,df2.columns.tolist())
+    df3=recode_empty_cells(df3,df3.columns.tolist())
+    df4=recode_empty_cells(df4,df4.columns.tolist())
+    df1.to_csv('positive_test_results_all_subjects.csv',index=False)
+    df2.to_csv('positive_test_results.csv',index=False)
+    df3.to_csv('negative_test_results_all_subjects.csv',index=False)
+    df4.to_csv('negative_test_results.csv',index=False)
 
 
 

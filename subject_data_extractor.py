@@ -122,8 +122,7 @@ class Source(object):
             df_positive_results.to_csv("positive_test_results.csv", index=False)
         else:
             df_negative_results.loc[len(df_negative_results)] = home_data + ["", "", random.randint(0, 1000000), "",
-                                                                             "All carousals present", "", "",
-                                                                             subject, "", "",part,full,""]
+                                                                             "All carousals present", "", "", "",part,full,""]
 
             df_negative_results.to_csv("negative_test_results.csv", index=False)
 
@@ -138,13 +137,13 @@ class Source(object):
             if len(df_new) > 0:
                 df_new1 = df_new.loc[df_new["Section_name"] == df2["Section_name"][ind]]
                 if len(df_new1) == 1:
-                    df2["present only once"][ind] = str("yes")
+                    df2["Duplicasy check"][ind] = str("yes")
                 else:
-                    df2["present only once"][ind] = str("no")
+                    df2["Duplicasy check"][ind] = str("no")
 
         df = pd.concat([df11, df2])
 
-        df = df.dropna(axis=0, subset=['present only once'])
+        df = df.dropna(axis=0, subset=['Duplicasy check'])
         # print(df)
         df.to_csv('positive_test_results.csv', index=False)
 
