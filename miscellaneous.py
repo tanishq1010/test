@@ -6,7 +6,9 @@ from test_data import test_data_extractor
 
 
 def comparator(name1, name2):
+    print("comparator")
     df1 = pd.read_csv(name2)
+    # print(df1)
     # df1=df[df['Grades'].str.contains(grade)]
     df2 = pd.read_csv(name1)
     list1 = [""] * len(df1)
@@ -14,48 +16,50 @@ def comparator(name1, name2):
     for ind in df1.index:
         if df1['Section_name'][ind]=='All carousals present' or df1['Section_name'][ind]=='All subjet Tags present':
             continue
-        df_new = df2.loc[df2["Section_name"] == df1["Section_name"][ind]]
-
-        if len(df_new) > 0:
-            df_new1 = df_new.loc[df_new["Id"] == df1["Id"][ind]]
-
-            if len(df_new1) > 0:
-                df_new2 = df_new1.loc[df_new1["Exam"] == df1["Exam"][ind]]
-
-                if len(df_new2) > 0:
-                    df_new3 = df_new2.loc[df_new2["Goal"] == df1["Goal"][ind]]
-                    if len(df_new3) > 0:
-                        df_new4 = df_new3.loc[df_new3["Subject_tagged"] == df1["Subject_tagged"][ind]]
-                        if len(df_new4) > 0:
-                            df1["present in all subjects"][ind] = str("yes")
+        # print("sdbaksjdas")
+        # df_new = df2.loc[df2["Section_name"] == df1["Section_name"][ind]]
+        # print(df_new)
+        # if len(df_new) > 0:
         else:
-            df1["present in all subjects"][ind] = str("no")
+            df_new1 = df2.loc[df2["Id"] == df1["Id"][ind]]
+            if len(df_new1) > 0:
+                    df_new2 = df_new1.loc[df_new1["Exam"] == df1["Exam"][ind]]
+                    # print(df_new2)
+                    if len(df_new2) > 0:
+                        df_new3 = df_new2.loc[df_new2["Goal"] == df1["Goal"][ind]]
+                        if len(df_new3) > 0:
+                            df_new4 = df_new3.loc[df_new3["Subject_tagged"] == df1["Subject_tagged"][ind]]
+                            # print(df_new4)
+                            if len(df_new4) > 0:
+                                df1["present in all subjects"][ind] = str("yes")
+            else:
+                    df1["present in all subjects"][ind] = str("no")
     df1.to_csv(name2, index=False)
 
 
 def comparator2(name1, name2):
+    print("comparator2")
     df1 = pd.read_csv(name1)
     # df1=df[df['Grades'].str.contains(grade)]
     df2 = pd.read_csv(name2)
     for ind in df1.index:
         if df1['Section_name'][ind]=='All carousals present' or df1['Section_name'][ind]=='All subjet Tags present':
             continue
-        df_new = df2.loc[df2["Section_name"] == df1["Section_name"][ind]]
-
-        if len(df_new) > 0:
-            df_new1 = df_new.loc[df_new["Id"] == df1["Id"][ind]]
+        else:
+        
+            df_new1 = df2.loc[df2["Id"] == df1["Id"][ind]]
 
             if len(df_new1) > 0:
-                df_new2 = df_new1.loc[df_new1["Exam"] == df1["Exam"][ind]]
+                    df_new2 = df_new1.loc[df_new1["Exam"] == df1["Exam"][ind]]
 
-                if len(df_new2) > 0:
-                    df_new3 = df_new2.loc[df_new2["Goal"] == df1["Goal"][ind]]
-                    if len(df_new3) > 0:
-                        df_new4 = df_new3.loc[df_new3["Subject_tagged"] == df1["Subject_tagged"][ind]]
-                        if len(df_new4) > 0:
-                            df1["present in subject"][ind] = str("yes")
-        else:
-            df1["present in subject"][ind] = str("no")
+                    if len(df_new2) > 0:
+                        df_new3 = df_new2.loc[df_new2["Goal"] == df1["Goal"][ind]]
+                        if len(df_new3) > 0:
+                            df_new4 = df_new3.loc[df_new3["Subject_tagged"] == df1["Subject_tagged"][ind]]
+                            if len(df_new4) > 0:
+                                df1["present in subject"][ind] = str("yes")
+            else:
+                    df1["present in subject"][ind] = str("no")
     df1.to_csv(name1, index=False)
 
 
