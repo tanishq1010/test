@@ -12,7 +12,7 @@ class Source(object):
             'Accept': '*/*',
             'Content-Type': 'application/json',
         }
-        self.host = 'https://preprodms.embibe.com'
+        self.host = 'https://fiberdemoms.embibe.com'
 
     def callAPI(self, url, payload, method):
         self.headers[
